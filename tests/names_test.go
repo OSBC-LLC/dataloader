@@ -29,3 +29,27 @@ func TestGetRandomFemaleFirstName(t *testing.T) {
 		}
 	}
 }
+
+func TestGetRandomMaleOrFemaleFirstName(t *testing.T) {
+	for i := 0; i < 50; i++ {
+		name, err := string.GetRandomMaleOrFemaleFirstName()
+		if err != nil {
+			t.Errorf("Expected no error, got: %v", err)
+		}
+		if name == "" {
+			t.Errorf("Expected a non-empty string, got an empty string")
+		}
+	}
+}
+
+func TestGetRandomLastName(t *testing.T) {
+	for i := 0; i < 50; i++ {
+		name, err := string.GetRandomLastName()
+		if err != nil {
+			t.Errorf("Expected no error, got: %v", err)
+		}
+		if name == "" {
+			t.Errorf("Expected a non-empty string, got an empty string")
+		}
+	}
+}
