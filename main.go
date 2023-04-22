@@ -24,7 +24,7 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", indexHandler)
-	http.ListenAndServe(":"+port, nil)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
