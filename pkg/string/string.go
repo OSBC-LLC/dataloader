@@ -6,13 +6,20 @@ import (
 	"github.com/OSBC-LLC/dataloader/pkg/number"
 )
 
-// GetRandomFirstname: Get a random male, female, or either first name.
-func GetRandomMaleFirstName() (string, error) {
+func buildFileName(path []string) (string, error) {
 	rootPath, err := getRootPath()
 	if err != nil {
 		return "", err
 	}
-	fileName := filepath.Join(rootPath, "data", "firstNames", "male.txt")
+	return filepath.Join(rootPath, path[0], path[1], path[2]), nil
+}
+
+// GetRandomFirstname: Get a random male, female, or either first name.
+func GetRandomMaleFirstName() (string, error) {
+	fileName, err := buildFileName([]string{"data", "firstNames", "male.txt"})
+	if err != nil {
+		return "", err
+	}
 	data, err := readFileLines(fileName)
 	if err != nil {
 		return "", err
@@ -21,11 +28,10 @@ func GetRandomMaleFirstName() (string, error) {
 }
 
 func GetRandomFemaleFirstName() (string, error) {
-	rootPath, err := getRootPath()
+	fileName, err := buildFileName([]string{"data", "firstNames", "female.txt"})
 	if err != nil {
 		return "", err
 	}
-	fileName := filepath.Join(rootPath, "data", "firstNames", "female.txt")
 	data, err := readFileLines(fileName)
 	if err != nil {
 		return "", err
@@ -34,16 +40,18 @@ func GetRandomFemaleFirstName() (string, error) {
 }
 
 func GetRandomMaleOrFemaleFirstName() (string, error) {
-	rootPath, err := getRootPath()
+	fileName, err := buildFileName([]string{"data", "firstNames", "male.txt"})
 	if err != nil {
 		return "", err
 	}
-	fileName := filepath.Join(rootPath, "data", "firstNames", "male.txt")
 	allData, err := readFileLines(fileName)
 	if err != nil {
 		return "", err
 	}
-	fileName = filepath.Join(rootPath, "data", "firstNames", "female.txt")
+	fileName, err = buildFileName([]string{"data", "firstNames", "female.txt"})
+	if err != nil {
+		return "", err
+	}
 	femaleData, err := readFileLines(fileName)
 	if err != nil {
 		return "", err
@@ -53,11 +61,22 @@ func GetRandomMaleOrFemaleFirstName() (string, error) {
 }
 
 func GetRandomLastName() (string, error) {
-	rootPath, err := getRootPath()
+	fileName, err := buildFileName([]string{"data", "lastNames", "lastNames.txt"})
 	if err != nil {
 		return "", err
 	}
-	fileName := filepath.Join(rootPath, "data", "lastNames", "lastNames.txt")
+	data, err := readFileLines(fileName)
+	if err != nil {
+		return "", err
+	}
+	return data[number.GetRandomInt(0, len(data)-1)], nil
+}
+
+func GetRandomCountry() (string, error) {
+	fileName, err := buildFileName([]string{"data", "countries", "countries.txt"})
+	if err != nil {
+		return "", err
+	}
 	data, err := readFileLines(fileName)
 	if err != nil {
 		return "", err
