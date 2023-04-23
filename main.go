@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
@@ -9,7 +8,6 @@ import (
 	"path/filepath"
 	"text/template"
 
-	pkgstr "github.com/OSBC-LLC/dataloader/pkg/string"
 	"github.com/joho/godotenv"
 )
 
@@ -25,9 +23,6 @@ func init() {
 }
 
 func main() {
-	maleFirst, _ := pkgstr.GetRandomMaleFirstName()
-	maleLast, _ := pkgstr.GetRandomLastName()
-	fmt.Println("Name: ", maleFirst, maleLast)
 	http.HandleFunc("/", indexHandler)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

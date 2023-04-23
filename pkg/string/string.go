@@ -83,3 +83,25 @@ func GetRandomCountry() (string, error) {
 	}
 	return data[number.GetRandomInt(0, len(data)-1)], nil
 }
+
+func GetRandomCountryCode(l int) (string, error) {
+	var fileName string
+	var err error
+	switch l {
+	case 2:
+		fileName, err = buildFileName([]string{"data", "countries", "alpha2codes.txt"})
+		if err != nil {
+			return "", err
+		}
+	default:
+		fileName, err = buildFileName([]string{"data", "countries", "alpha3codes.txt"})
+		if err != nil {
+			return "", err
+		}
+	}
+	data, err := readFileLines(fileName)
+	if err != nil {
+		return "", err
+	}
+	return data[number.GetRandomInt(0, len(data)-1)], nil
+}
